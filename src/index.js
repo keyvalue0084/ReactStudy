@@ -4,18 +4,42 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
+class LoginControl extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleLoginClick = this.handleLoginClick.bind(this);
+    this.handleLogoutClick = this.handleLogoutClick.bind(this);
+    this.state = {isLoggedIn: false};
+  }
 
-function tick() {
-  const element = (
-    <div>
-      <h1>Hello, Juja!</h1>
-      <h2>It is {new Date().toLocaleTimeString()}.</h2>
-    </div>
-  );
-  ReactDOM.render(element, document.getElementById('root'));
+  handleLoginClick() {
+    this.setState({isLoggedIn: true});
+  }
+
+  handleLogoutClick() {
+    this.setState({isLoggedIn: false});
+  }
+
+  render() {
+    const isLoggedIn = this.state.isLoggedIn;
+    
+    const button = isLoggedIn ? (
+      <LogoutButton onClick={this.handleLogoutClick} />
+    ) : (
+      <LoginButton onClick={this.handleLoginClick} />
+    );
+
+    return (
+      <div>
+        <Greeting isLoggedIn={isLoggedIn} />
+        {button}
+      </div>
+    );
+  }
 }
 
-setInterval(tick, 1000);
+ReactDOM.render(
+  <LoginControl />,
+  document.getElementById('root')
+);
 
-
-registerServiceWorker();
